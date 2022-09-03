@@ -16,8 +16,9 @@ const displayNewsCetagory = (newsitems) => {
     // Creating List Section HTML .
     newsitems.forEach(news => {
         const newsDiv = document.createElement('li');
+        // Adding Cetegory .
         newsDiv.innerHTML = `
-        <li class="nav-item mx-3">
+        <li class="nav-item mx-4">
             <a onclick ="IdNewsCetegory('${news.category_id}')" class="nav-link" aria-current="page" href="#">${news.category_name}</a>
         </li>
         `;
@@ -36,8 +37,26 @@ const loadingNews = async (cetegoryId) => {
 
 const showNews = (id) => {
     const cardSection = document.getElementById("news-section");
-    console.log(id.rating);
+
+    const numberOfResults = document.getElementById('number-of-result');
+    if(id.length == 0){
+        numberOfResults.value = `No Data Found For This Cetegory.`;
+        // Stopping Toogle Spinner.
+        toogleSpinner(false);
+    }else{
+        numberOfResults.value = `${id.length} Items Found In This Cetegory`;
+    }
+    
+
     cardSection.innerHTML = ''
+
+    // Nothing Fond Warning....
+    const nothingFond = document.getElementById("warning-msg");
+    if (id.length <= 0) {
+        nothingFond.classList.remove('d-none');
+    } else {
+        nothingFond.classList.add("d-none");
+    }
 
     id.forEach(newsCard => {
         const cardDiv = document.createElement('div');
@@ -85,18 +104,24 @@ const showNews = (id) => {
         </div>
         `;
         cardSection.appendChild(cardDiv);
+        // Toolge Sinner .
+        toogleSpinner(false);
 
     })
 
 }
 
 const IdNewsCetegory = (id) => {
+    // Toogle Spinner .
+    toogleSpinner(true);
     loadingNews(id);
 }
 
 
 // Modal
 const details = async (id) => {
+    // Spinner
+    toogleSpinner(true);
     const url = `https://openapi.programming-hero.com/api/news/${id}`
     const res = await fetch(url);
     const data = await res.json();
@@ -108,7 +133,7 @@ const displayDetails = d => {
     const detailCard = document.getElementById('detail-card');
     detailCard.innerHTML = '';
     d.forEach(detail => {
-        
+
 
         const title = document.createElement('div');
         title.innerHTML = `
@@ -135,7 +160,21 @@ const displayDetails = d => {
         </div>
         `
         detailCard.appendChild(title);
+        // Spinner
+        toogleSpinner(false);
     })
+}
+
+
+// Spinner 
+const toogleSpinner = (isLoading) => {
+    const loadingSpinner = document.getElementById("loading");
+    if (isLoading) {
+        loadingSpinner.classList.remove('d-none');
+    }
+    else {
+        loadingSpinner.classList.add('d-none');
+    }
 }
 
 loadPhones();
