@@ -3,6 +3,7 @@
 // Adding Cetegory Section .
 const loadPhones = async () => {
     const url = `https://openapi.programming-hero.com/api/news/categories`
+    // Try Catch...
     try {
         const res = await fetch(url);
         const data = await res.json();
@@ -13,6 +14,7 @@ const loadPhones = async () => {
     }
 }
 
+// Displaying Cetegory Of News ...
 const displayNewsCetagory = (newsitems) => {
     // Getting the Cetegory Section By ID .
     const NewsCetegory = document.getElementById('news-cetegory');
@@ -35,6 +37,7 @@ const displayNewsCetagory = (newsitems) => {
 
 const loadingNews = async (cetegoryId) => {
     const url = `https://openapi.programming-hero.com/api/news/category/${cetegoryId}`
+    // Try Catch...
     try {
         const res = await fetch(url);
         const data = await res.json();
@@ -44,13 +47,15 @@ const loadingNews = async (cetegoryId) => {
     }
 }
 
+// Displaying News Card ...
 const showNews = (id) => {
     const cardSection = document.getElementById("news-section");
-    console.log(id)
 
+    // Displaying Number of Results Found For This Cetegory ...
     const numberOfResults = document.getElementById('number-of-result');
     if (id.length == 0) {
         numberOfResults.value = `No Data Found For This Cetegory.`;
+
         // Stopping Toogle Spinner.
         toogleSpinner(false);
     } else {
@@ -72,10 +77,8 @@ const showNews = (id) => {
     id.sort((a, b) => b.total_view - a.total_view);
 
     id.forEach(newsCard => {
-        
+
         const cardDiv = document.createElement('div');
-
-
         cardDiv.innerHTML = `
         <div class="card mb-3" >
             <div class="row g-0">
@@ -133,15 +136,20 @@ const IdNewsCetegory = (id) => {
 }
 
 
-// Modal
+// Modal For Show The Details...
 const details = async (id) => {
+
     // Spinner
     toogleSpinner(true);
     const url = `https://openapi.programming-hero.com/api/news/${id}`
-    const res = await fetch(url);
-    const data = await res.json();
-    displayDetails(data.data);
-
+    // Try Catch ...
+    try {
+        const res = await fetch(url);
+        const data = await res.json();
+        displayDetails(data.data);
+    } catch (error) {
+        console.log(error);
+    }
 }
 // News Details ...
 const displayDetails = d => {
@@ -151,6 +159,7 @@ const displayDetails = d => {
 
 
         const title = document.createElement('div');
+        // Modal Inner HTML...
         title.innerHTML = `
         <div class="card text-center">
             <div class="card-header bg-black text-white">
