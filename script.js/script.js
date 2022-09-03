@@ -86,13 +86,13 @@ const showNews = (id) => {
                                 <img style="width : 50px; height: 50px; border-radius : 47% 53% 48% 52% / 50% 50% 50% 50% "
                                     src="${newsCard.author.img}" alt="">
                                 <div class="mx-4">
-                                    <h6>${newsCard.author.name}</h6>
+                                    <h6>${newsCard.author.name ? newsCard.author.name : "No Name Found."}</h6>
                                     <h6>${newsCard.author.published_date}</h6>
                                 </div>
                             </div>
                             <div class="d-flex my-2">
                                 <i class="fa-solid fa-eye"></i>
-                                <h6 class="mx-3">${newsCard.total_view}</h6>
+                                <h6 class="mx-3">${newsCard.total_view ? newsCard.total_view : "No View."}</h6>
                             </div>
                             <div class="d-flex my-2">
                                 <!-- Rating Stars. -->
@@ -104,7 +104,7 @@ const showNews = (id) => {
                             </div>
                             <div class="mt-2">
                                 <!-- More Details Modal -->
-                                <button onclick = "details('${newsCard._id}')" data-bs-toggle="modal" data-bs-target="#exampleModal" class = "btn"><i class="fa-solid fa-arrow-right"></i></button>
+                                <button onclick = "details('${newsCard._id}')" data-bs-toggle="modal" data-bs-target="#exampleModal" class = "btn bg-info"><i class="fa-solid fa-arrow-right"></i></button>
                             </div>
                         </div>
                     </div>
@@ -153,7 +153,7 @@ const displayDetails = d => {
             <div class="card-body">
                 <div class = "d-flex justify-content-evenly align-items-center">
                     <h5 class="card-title">Author : </h5>
-                    <h6>${detail.author.name}</h6>
+                    <h6>${detail.author.name ? detail.author.name : "No Name Found."}</h6>
                 </div>
                 <p class="card-text">${detail.details.slice(0, 250)}</p>
                 
