@@ -3,9 +3,14 @@
 // Adding Cetegory Section .
 const loadPhones = async () => {
     const url = `https://openapi.programming-hero.com/api/news/categories`
-    const res = await fetch(url);
-    const data = await res.json();
-    displayNewsCetagory(data.data.news_category);
+    try {
+        const res = await fetch(url);
+        const data = await res.json();
+        displayNewsCetagory(data.data.news_category);
+    }
+    catch (error) {
+        console.log(error);
+    }
 }
 
 const displayNewsCetagory = (newsitems) => {
@@ -18,7 +23,7 @@ const displayNewsCetagory = (newsitems) => {
         const newsDiv = document.createElement('li');
         // Adding Cetegory .
         newsDiv.innerHTML = `
-        <li class="nav-item mx-4">
+        <li class="nav-item mx-2">
             <a onclick ="IdNewsCetegory('${news.category_id}')" class="nav-link" aria-current="page" href="#">${news.category_name}</a>
         </li>
         `;
@@ -30,23 +35,27 @@ const displayNewsCetagory = (newsitems) => {
 
 const loadingNews = async (cetegoryId) => {
     const url = `https://openapi.programming-hero.com/api/news/category/${cetegoryId}`
-    const res = await fetch(url);
-    const data = await res.json();
-    showNews(data.data);
+    try {
+        const res = await fetch(url);
+        const data = await res.json();
+        showNews(data.data);
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 const showNews = (id) => {
     const cardSection = document.getElementById("news-section");
 
     const numberOfResults = document.getElementById('number-of-result');
-    if(id.length == 0){
+    if (id.length == 0) {
         numberOfResults.value = `No Data Found For This Cetegory.`;
         // Stopping Toogle Spinner.
         toogleSpinner(false);
-    }else{
+    } else {
         numberOfResults.value = `${id.length} Items Found In This Cetegory`;
     }
-    
+
 
     cardSection.innerHTML = ''
 
