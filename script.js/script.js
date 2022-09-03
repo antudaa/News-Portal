@@ -46,6 +46,7 @@ const loadingNews = async (cetegoryId) => {
 
 const showNews = (id) => {
     const cardSection = document.getElementById("news-section");
+    console.log(id)
 
     const numberOfResults = document.getElementById('number-of-result');
     if (id.length == 0) {
@@ -67,8 +68,13 @@ const showNews = (id) => {
         nothingFond.classList.add("d-none");
     }
 
+    // Sorting News Depending On View.
+    id.sort((a, b) => b.total_view - a.total_view);
+
     id.forEach(newsCard => {
+        
         const cardDiv = document.createElement('div');
+
 
         cardDiv.innerHTML = `
         <div class="card mb-3" >
@@ -87,7 +93,7 @@ const showNews = (id) => {
                                     src="${newsCard.author.img}" alt="">
                                 <div class="mx-4">
                                     <h6>${newsCard.author.name ? newsCard.author.name : "No Name Found."}</h6>
-                                    <h6>${newsCard.author.published_date}</h6>
+                                    <h6>${newsCard.author.published_date ? newsCard.author.published_date : "No Data Found."}</h6>
                                 </div>
                             </div>
                             <div class="d-flex my-2">
